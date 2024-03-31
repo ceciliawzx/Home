@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
-import '../css/Home.css';
+import '../css/home/Home.css';
+import ShootingStars from '../components/home/ShootingStarts';
+import Profile from '../components/home/Profile';
 
 const Home = () => {
   const [moonPath, setMoonPath] = useState('url(/bg/home/home-bg-moon1.png)');
-  const [catRiverPath, setCatRiverPath] = useState(
-    'url(/bg/home/home-bg-catriver1.png)'
-  );
+  const [catPath, setCatPath] = useState('url(/bg/home/home-bg-cat1.png)');
   const [skyPath, setSkyPath] = useState('url(/bg/home/home-bg-sky1.png)');
 
   const [showDialogue, setShowDialogue] = useState(true);
   const [showIntro, setShowIntro] = useState(false);
+  const [showStars, setShowStars] = useState(false);
 
   const setBg = () => {
     setMoonPath('url(/bg/home/home-bg-moon2.png)');
-    setCatRiverPath('url(/bg/home/home-bg-catriver2.png)');
-    setSkyPath('url(/bg/home/home-bg-sky2.png)');
+    setCatPath('url(/bg/home/home-bg-cat2.png)');
+    setSkyPath('url(/bg/home/home-bg3.png)');
     setShowIntro(true);
     setShowDialogue(false);
+    setShowStars(true);
   };
 
   return (
@@ -31,10 +33,13 @@ const Home = () => {
           backgroundPosition: 'center', // Center the background image
           overflow: 'hidden', // Prevent image overflow during transitions
           transition: 'background-image 0.8s ease',
+          display: 'flex',
+          justifyContent: 'center',
         }}
       >
-        <BgMoonImg moonPath={moonPath} />
-        <BgCatRiverImg catRiverPath={catRiverPath} />
+        {showStars && <ShootingStars />}
+        <BgCatImg catPath={catPath} />
+        {showIntro && <Profile />}
         <div
           className='dialogue'
           style={{
@@ -45,62 +50,27 @@ const Home = () => {
         >
           Hi
         </div>
-        <div
-          className='home-intro'
-          style={{
-            color: 'white',
-            opacity: showIntro ? 1 : 0,
-            transition: 'opacity 0.8s ease',
-          }}
-        >
-          <h1>Hi, I am Zixi Wang</h1>
-          <p>
-            I'm a penultimate year Computing student at Imperial College London.
-          </p>
-        </div>
       </div>
     </>
   );
 };
 
-const BgCatRiverImg = ({ catRiverPath }: { catRiverPath: string }) => {
+const BgCatImg = ({ catPath }: { catPath: string }) => {
   return (
     <div
       className='bg-img'
       style={{
-        backgroundImage: catRiverPath,
+        backgroundImage: catPath,
         backgroundSize: 'contain',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center', // Center the background image
         position: 'absolute',
         height: '30%',
-        width: '95%',
+        width: '15%',
         maxHeight: '100vh',
         maxWidth: '100vw',
-        right: 0,
+        left: '5%',
         bottom: 0,
-        transition: 'background-image 0.8s ease', // Smooth transition
-      }}
-    />
-  );
-};
-
-const BgMoonImg = ({ moonPath }: { moonPath: string }) => {
-  return (
-    <div
-      className='bg-img'
-      style={{
-        backgroundImage: moonPath,
-        backgroundSize: 'contain',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center', // Center the background image
-        position: 'absolute',
-        height: '90%',
-        width: '30%',
-        maxHeight: '100vh',
-        maxWidth: '100vw',
-        right: 0,
-        top: '5%',
         transition: 'background-image 0.8s ease', // Smooth transition
       }}
     />
